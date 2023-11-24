@@ -3,7 +3,6 @@ from hll import Hll
 from hll_set import HllSet
 import random
 import string
-import torch
 
 import matplotlib.pyplot as plt
 
@@ -87,3 +86,12 @@ print('(A * U) == A', (A * U) == A, (A * U).card)
 print('\nIdempotent laws:')
 print('(A + A) == A', (A + A) == A, (A + A).card)
 print('(A * U) == A', (A * U) == A, (A * U).card)
+
+print('\nXab to record:', Xab.toRecord()['id'])
+print('\nXbc to record:', Xbc.toRecord()['id'])
+print('\nA to record:', A.toRecord()['id'])
+print('\nX to record:', X.toRecord()['id'])
+print('\n(A + B*C) to record:', (A + B * C).toRecord()['id'])
+print(A.toRecord()['id'])
+print(B.toRecord()['id'])
+print(C.toRecord()['id'])

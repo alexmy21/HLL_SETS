@@ -1,11 +1,19 @@
+import hashlib
 from hll import Hll
 from scipy.spatial import distance
 
 class HllSet:
     # card = 0
-    def __init__(self, data, _children=(), _op='init', label=''):
+    def __init__(self, data=None, _children=(), _op='init', label=''):
         # super().__init__(data, _children, _op)
+        if data is None:
+            data = Hll(13)
+
         self.data = data
+        sha1 = hashlib.sha1()
+        sha1.update(self.data.registers())
+        self.id = sha1.hexdigest()
+        # self.registers = self.data.registers()
         self.card = self.data.card
         self.delta = self._delta(Hll(data.ex), data)
         self.grad = self._grad((0, 0, 0), self.delta)
@@ -26,7 +34,30 @@ class HllSet:
         return self.equal(other)
      
     def __repr__(self):
-        return f"HllSet(card: {self.data.card}, op: {self._op}, label: {self.label})"
+        return f"HllSet(card: {self.card}, op: {self._op}, label: {self.label})"
+    
+    def fromRecord(self, _record):
+        self.id = _record['id']
+        self.card = _record['card']
+        self.delta = _record['delta']
+        self.grad = _record['grad']
+        self.label = _record['label']
+        self._op = _record['op']
+        self._prev = _record['prev']
+        self.data = self.data.set_registers(_record['registers'])
+        return self
+    
+    def toRecord(self):        
+        return {            
+            'id': self.id,
+            'card': self.card,
+            'delta': self.delta, 
+            'grad': self.grad, 
+            'label': self.label,
+            'registers': self.data.registers(),
+            'op': self._op,
+            'prev': self._prev
+            }
     
     #===========================================================================
     # Operators

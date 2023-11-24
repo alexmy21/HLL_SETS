@@ -55,6 +55,22 @@ cover/
 *.mo
 *.pot
 
+# images
+*.JPG
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.svg
+*.ico
+*.tif
+*.tiff
+*.bmp
+*.xcf
+
+# duckdb files
+*.duckdb
+
 # Django stuff:
 *.log
 local_settings.py

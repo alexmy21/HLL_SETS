@@ -1,0 +1,8 @@
+type: map
+mapping:
+  name:
+    type: str
+  age:
+    type: int
+  email:
+    type: str
